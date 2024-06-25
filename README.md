@@ -1,7 +1,7 @@
 # quanta-sentinel
 
 ## Overview
-quanta-sentinel is the monitoring and logging service for the Quantquanta platform. It provides centralized logging, monitoring, and alerting capabilities for all microservices.
+quanta-sentinel is the monitoring and logging service for the QuantForge platform. It provides centralized logging, monitoring, and alerting capabilities for all microservices.
 
 ## Key Features
 - Centralized log aggregation
@@ -11,45 +11,43 @@ quanta-sentinel is the monitoring and logging service for the Quantquanta platfo
 - Automated incident response
 
 ## Technology Stack
-- ELK Stack (Elasticsearch, Logstash, Kibana)
+- Go
 - Prometheus for metrics collection
 - Grafana for metrics visualization
-- Node.js for custom monitoring scripts
+- Loki for log aggregation
+- Alertmanager for alert management
 
 ## Setup
 1. Clone the repository:
    ```
-   git clone https://github.com/quantquanta/quanta-sentinel.git
+   git clone https://github.com/quantforge/quanta-sentinel.git
    cd quanta-sentinel
    ```
 2. Install dependencies:
    ```
-   npm install
+   go mod tidy
    ```
 3. Set up environment variables:
    ```
    cp .env.example .env
    # Edit .env with your configuration
    ```
-4. Start the ELK stack (requires Docker):
+4. Build and run the service:
    ```
-   docker-compose up -d
-   ```
-5. Start the Node.js monitoring service:
-   ```
-   npm start
+   go build
+   ./quanta-sentinel
    ```
 
 ## Accessing Dashboards
-- Kibana: http://localhost:5601
 - Grafana: http://localhost:3000
+- Prometheus: http://localhost:9090
 
 ## Configuring Alerts
 Edit `config/alerts.yaml` to set up custom alerts.
 
 ## Testing
 ```
-npm test
+go test ./...
 ```
 
 ## Contributing
