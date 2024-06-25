@@ -1,7 +1,7 @@
-# forge-sentinel
+# quanta-sentinel
 
 ## Overview
-forge-sentinel is the monitoring and logging service for the QuantForge platform. It provides centralized logging, monitoring, and alerting capabilities for all microservices.
+quanta-sentinel is the monitoring and logging service for the Quantquanta platform. It provides centralized logging, monitoring, and alerting capabilities for all microservices.
 
 ## Key Features
 - Centralized log aggregation
@@ -19,8 +19,8 @@ forge-sentinel is the monitoring and logging service for the QuantForge platform
 ## Setup
 1. Clone the repository:
    ```
-   git clone https://github.com/quantforge/forge-sentinel.git
-   cd forge-sentinel
+   git clone https://github.com/quantquanta/quanta-sentinel.git
+   cd quanta-sentinel
    ```
 2. Install dependencies:
    ```
