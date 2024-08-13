@@ -1,57 +1,119 @@
-# quanta-sentinel
+# Sentinel: Enhanced Logging and Performance Monitoring Microservice
 
-## Overview
-quanta-sentinel is the monitoring and logging service for the QuantForge platform. It provides centralized logging, monitoring, and alerting capabilities for all microservices.
+Sentinel is a robust microservice designed for monitoring Docker containers, collecting logs, parsing them for insights, and providing performance metrics and alerting. It's particularly suited for low-latency environments such as quantitative trading systems.
 
-## Key Features
-- Centralized log aggregation
-- Real-time monitoring of system health
-- Customizable alerting system
-- Performance metrics collection and visualization
-- Automated incident response
+## Features
 
-## Technology Stack
-- Go
-- Prometheus for metrics collection
-- Grafana for metrics visualization
-- Loki for log aggregation
-- Alertmanager for alert management
+- Concurrent monitoring of multiple Docker containers
+- Sophisticated log parsing and analysis
+- Prometheus metrics for log lines, processing time, errors, and latency
+- Configurable alerting system
+- Extensible architecture for easy addition of new features
 
-## Setup
+## Getting Started
+
+### Prerequisites
+
+- Docker
+- Docker Compose
+- Go 1.21 or later
+
+### Installation
+
 1. Clone the repository:
    ```
-   git clone https://github.com/quantforge/quanta-sentinel.git
-   cd quanta-sentinel
+   git clone https://github.com/yourusername/sentinel.git
+   cd sentinel
    ```
-2. Install dependencies:
+
+2. Build the Docker image:
    ```
-   go mod tidy
+   docker build -t sentinel .
    ```
+
 3. Set up environment variables:
+   Create a `.env` file in the project root and add the following variables:
    ```
-   cp .env.example .env
-   # Edit .env with your configuration
-   ```
-4. Build and run the service:
-   ```
-   go build
-   ./quanta-sentinel
+   PORT=8080
+   DB_DATABASE=sentinel
+   DB_USERNAME=user
+   DB_PASSWORD=password
+   DB_PORT=5432
    ```
 
-## Accessing Dashboards
-- Grafana: http://localhost:3000
-- Prometheus: http://localhost:9090
+4. Start the services using Docker Compose:
+   ```
+   docker-compose up -d
+   ```
 
-## Configuring Alerts
-Edit `config/alerts.yaml` to set up custom alerts.
+## Usage
 
-## Testing
+Once the services are up and running, you can access:
+
+- Metrics: `http://localhost:8080/metrics`
+- Prometheus: `http://localhost:9090`
+- Grafana: `http://localhost:3000`
+
+## Configuration
+
+The service can be configured using environment variables:
+
+- `METRICS_ADDR`: Address to serve metrics (default: ":8080")
+- `DOCKER_HOST`: Docker daemon socket (default: "unix:///var/run/docker.sock")
+- `SMTP_HOST`: SMTP server for sending alerts
+- `SMTP_PORT`: SMTP server port
+- `SMTP_FROM`: Email address to send alerts from
+- `SMTP_PASSWORD`: Password for the email account
+
+## Development
+
+### Running Tests
+
+To run unit tests:
 ```
 go test ./...
 ```
 
-## Contributing
-Please read CONTRIBUTING.md for details on our code of conduct and the process for submitting pull requests.
+To run integration tests (requires Docker):
+```
+go test ./test/integration -tags=integration
+```
 
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+### Linting
+
+We use golangci-lint for linting. To run the linter:
+```
+golangci-lint run
+```
+
+### Pre-commit Hooks
+
+To set up pre-commit hooks:
+```
+./scripts/setup_pre_commit.sh
+```
+
+## Extending the Project
+
+To add more features:
+
+1. Create new packages in the `internal/` directory
+2. Add new metrics in `internal/metrics/metrics.go`
+3. Extend the log parsing logic in `internal/logparser/parser.go`
+4. Add new alerts in `internal/alerting/alerting.go`
+5. Update the monitor logic in `internal/monitor/monitor.go`
+6. Update the main function in `cmd/monitor/main.go` as needed
+
+## CI/CD
+
+The project uses GitHub Actions for CI/CD. The workflow includes:
+
+- Running tests
+- Linting
+- Building and pushing Docker images
+- Deploying to Kubernetes (including canary deployments)
+- Security scanning with CodeQL and Trivy
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
